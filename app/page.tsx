@@ -72,7 +72,7 @@ export default function Home() {
               transition={{ delay: 0.5 }}
             >
               <p>🎁 Instant digital rewards • 🗺️ Real-time journey tracking • 🏆 State leaderboards</p>
-              <p className="text-xs">Julie sees you snooping in here. It's okay Panda approves ;)</p>
+              <p className="text-xs">How long will it take for Panda to travel to every state? ;)</p>
             </motion.div>
           </motion.div>
 
