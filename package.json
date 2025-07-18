@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NEXT_PUBLIC_SUPABASE_URL=https://dbfwaqadlbowogyhdiyg.supabase.co NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRiZndhcWFkbGJvd29neWhkaXlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAyOTMyOTQsImV4cCI6MjA2NTg2OTI5NH0.kidNf6T84NwRvn9QZe8e6DE2zJd9PUGN4XaaNss-o6M next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
