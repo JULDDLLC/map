@@ -60,41 +60,11 @@ export default function PinForm({ onSuccess }: PinFormProps) {
         return
       }
 
-      // Get IP address for duplicate prevention
-      const ipResponse = await fetch('https://api.ipify.org?format=json')
-      const { ip } = await ipResponse.json()
-
-      // Check if IP already has a pin
-      const { data: existingPins } = await supabase
-        .from('pins')
-        .select('id')
-        .eq('ip_address', ip)
-        .limit(1)
-
-      if (existingPins && existingPins.length > 0) {
-        toast.error('You can only submit one pin per device')
-        return
-      }
-
-      // Insert new pin
-      const { error } = await supabase
-        .from('pins')
-        .insert([{
-          nickname: formData.nickname,
-          city: formData.city,
-          state: formData.state,
-          parent_email: formData.parentEmail || null,
-          ip_address: ip,
-          user_agent: navigator.userAgent,
-          approved: true // Auto-approve for now
-        }])
-
-      if (error) {
-        throw error
-      }
+      // Demo mode - simulate successful submission
+      await new Promise(resolve => setTimeout(resolve, 1000))
 
       // Success callback
-      onSuccess(formData.nickname, formData.city, formData.state)
+      onSuccess(formData.nickname, formData.city, formData.state, !!formData.parentEmail)
       
       // Reset form
       setFormData({

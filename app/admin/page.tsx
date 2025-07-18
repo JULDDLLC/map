@@ -26,13 +26,8 @@ export default function AdminPage() {
 
   const fetchPins = async () => {
     try {
-      const { data, error } = await supabase
-        .from('pins')
-        .select('*')
-        .order('created_at', { ascending: false })
-
-      if (error) throw error
-      setPins(data || [])
+      // Demo mode - return empty pins
+      setPins([])
     } catch (error) {
       console.error('Error fetching pins:', error)
       toast.error('Failed to load pins')
@@ -43,22 +38,12 @@ export default function AdminPage() {
 
   const fetchStats = async () => {
     try {
-      const { data, error } = await supabase
-        .from('pins')
-        .select('approved, created_at')
-
-      if (error) throw error
-
-      const today = new Date().toISOString().split('T')[0]
-      const todayPins = data?.filter(pin => 
-        pin.created_at.startsWith(today)
-      ) || []
-
+      // Demo mode - return empty stats
       setStats({
-        total: data?.length || 0,
-        approved: data?.filter(pin => pin.approved).length || 0,
-        pending: data?.filter(pin => !pin.approved).length || 0,
-        todayCount: todayPins.length
+        total: 0,
+        approved: 0,
+        pending: 0,
+        todayCount: 0
       })
     } catch (error) {
       console.error('Error fetching stats:', error)

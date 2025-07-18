@@ -67,31 +67,25 @@ export default function InteractiveMap() {
   useEffect(() => {
     fetchPins()
     
-    const channel = supabase
-      .channel('pins')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'pins' }, (payload) => {
-        const newPin = payload.new as Pin
-        if (newPin.approved) {
-          setPins(prev => [...prev, newPin])
-        }
-      })
-      .subscribe()
+    // Real-time updates disabled in demo mode
+    // const channel = supabase
+    //   .channel('pins')
+    //   .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'pins' }, (payload) => {
+    //     const newPin = payload.new as Pin
+    //     if (newPin.approved) {
+    //       setPins(prev => [...prev, newPin])
+    //     }
+    //   })
+    //   .subscribe()
 
-    return () => {
-      supabase.removeChannel(channel)
-    }
+    // return () => {
+    //   supabase.removeChannel(channel)
+    // }
   }, [])
 
   const fetchPins = async () => {
-    const { data, error } = await supabase
-      .from('pins')
-      .select('*')
-      .eq('approved', true)
-      .order('created_at', { ascending: false })
-
-    if (data) {
-      setPins(data)
-    }
+    // Demo mode - return empty pins array
+    setPins([])
   }
 
   const getStateColor = (stateName: string) => {

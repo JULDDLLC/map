@@ -21,35 +21,28 @@ export default function Ticker() {
     
     fetchRecentPins()
     
-    const channel = supabase
-      .channel('pins')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'pins' }, (payload) => {
-        const newPin = payload.new as Pin
-        if (newPin.approved) {
-          setPins(prev => [newPin, ...prev.slice(0, 9)])
-          setTotalPins(prev => prev + 1)
-        }
-      })
-      .subscribe()
+    // Real-time updates disabled in demo mode
+    // const channel = supabase
+    //   .channel('pins')
+    //   .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'pins' }, (payload) => {
+    //     const newPin = payload.new as Pin
+    //     if (newPin.approved) {
+    //       setPins(prev => [newPin, ...prev.slice(0, 9)])
+    //       setTotalPins(prev => prev + 1)
+    //     }
+    //   })
+    //   .subscribe()
 
     return () => {
       window.removeEventListener('resize', handleResize)
-      supabase.removeChannel(channel)
+      // supabase.removeChannel(channel)
     }
   }, [])
 
   const fetchRecentPins = async () => {
-    const { data, error } = await supabase
-      .from('pins')
-      .select('*')
-      .eq('approved', true)
-      .order('created_at', { ascending: false })
-      .limit(10)
-
-    if (data) {
-      setPins(data)
-      setTotalPins(data.length)
-    }
+    // Demo mode - return empty pins
+    setPins([])
+    setTotalPins(0)
   }
 
   const tickerItems = pins.map(pin => 

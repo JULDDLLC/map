@@ -18,42 +18,23 @@ export default function Leaderboard() {
   useEffect(() => {
     fetchStats()
     
-    const channel = supabase
-      .channel('pins')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'pins' }, () => {
-        fetchStats()
-      })
-      .subscribe()
+    // Real-time updates disabled in demo mode
+    // const channel = supabase
+    //   .channel('pins')
+    //   .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'pins' }, () => {
+    //     fetchStats()
+    //   })
+    //   .subscribe()
 
-    return () => {
-      supabase.removeChannel(channel)
-    }
+    // return () => {
+    //   supabase.removeChannel(channel)
+    // }
   }, [])
 
   const fetchStats = async () => {
     try {
-      const { data, error } = await supabase
-        .from('pins')
-        .select('state')
-        .eq('approved', true)
-
-      if (error) throw error
-
-      const stateCounts: { [key: string]: number } = {}
-      data?.forEach(pin => {
-        stateCounts[pin.state] = (stateCounts[pin.state] || 0) + 1
-      })
-
-      const sortedStats = Object.entries(stateCounts)
-        .map(([state, count], index) => ({
-          state,
-          count,
-          rank: index + 1
-        }))
-        .sort((a, b) => b.count - a.count)
-        .slice(0, 10)
-
-      setStats(sortedStats)
+      // Demo mode - return empty stats
+      setStats([])
     } catch (error) {
       console.error('Error fetching stats:', error)
     } finally {
